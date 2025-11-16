@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <title>Email Form</title>
+    <script>
+        function testEmail() {
+
+            let uError = document.getElementById('uError');
+            let emailInput = document.getElementById("email");
+            let email = emailInput.value;
+
+            let words = name.split(" ");
+
+            if (email === "") {
+                uError.innerHTML = "Email cannot be empty!";
+                uError.style.color = "red";
+                return false;
+            }
+
+            if (email.indexOf("@") === -1 || email.indexOf(".") === -1) {
+                 uError.innerHTML = "Invalid email!";
+                 uError.style.color = "red";
+                 return false;
+    }
+
+            uError.innerHTML = "";
+            return true;
+
+        }
+    </script>
+
+
+</head>
+<body>
+        <p>Email</p>
+        <input type="text" id="email" name="email"><br><br>
+        <input type="button" name="Submit" value="Submit" onclick="testEmail()" >
+        <p id="uError"></p>
+    
+</body>
+</html>
