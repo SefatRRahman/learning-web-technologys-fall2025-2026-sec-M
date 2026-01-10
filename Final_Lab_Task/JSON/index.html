@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <style>
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #333;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        #error {
+            color: red;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Dynamic Student List</h2>
+    <button id="loadBtn">Load Student Data</button>
+    <div id="error"></div>
+    <table id="studentTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('loadBtn').addEventListener('click', function() {
+            var table = document.getElementById('studentTable');
+            var tbody = table.querySelector('tbody');
+            var errorDiv = document.getElementById('error');
+
+            tbody.innerHTML = '';  
+            errorDiv.textContent = '';
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'get_students.php', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            var data = JSON.parse(xhr.responseText);
+
+                            if (data.error) {
+                                errorDiv.textContent = data.error;
+                                table.style.display = 'none';
+                                return;
+                            }
+
+                            if (data.length === 0) {
+                                errorDiv.textContent = 'No student data available.';
+                                table.style.display = 'none';
+                                return;
+                            }
+
+                            for (var i = 0; i < data.length; i++) {
+                                var student = data[i];
+                                var row = document.createElement('tr');
+                                row.innerHTML = 
+                                    '<td>' + student.id + '</td>' +
+                                    '<td>' + student.name + '</td>' +
+                                    '<td>' + student.email + '</td>' +
+                                    '<td>' + student.department + '</td>';
+                                tbody.appendChild(row);
+                            }
+
+                            table.style.display = 'table';
+                        } catch (e) {
+                            errorDiv.textContent = 'Error parsing JSON: ' + e.message;
+                            table.style.display = 'none';
+                        }
+                    } else {
+                        errorDiv.textContent = 'AJAX request failed: ' + xhr.status;
+                        table.style.display = 'none';
+                    }
+                }
+            };
+            xhr.send();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "Kibriya Kabir",
+        "email": "kabir@gmail.com",
+        "department": "CSE"
+    },
+    {
+        "id": 2,
+        "name": "Shaharia Hossain",
+        "email": "shaharia6540@gmail.com",
+        "department": "CSE"
+    },
+    {
+        "id": 3,
+        "name": "Anik Hasan",
+        "email": "anikhasan76@gmail.com",
+        "department": "CSE"
+    }
+]
