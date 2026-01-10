@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>Name</title>
+    </head>
+
+    <body>
+        <form>
+            <label>Name</label><br>
+            <input type="text" id="name" name="name"><br><br>
+
+            <input type="button" value="Submit" onclick="validateName()">
+        </form>
+
+        <p id="uError"></p>
+
+        <script>
+
+            function validateName(){
+
+                let uError = document.getElementById('uError');
+                let username = document.getElementById('name').value;
+                
+                if(username == ""){
+                    uError.innerHTML = "Name cannot be empty!";
+                    uError.style.color = "red";
+                    return;
+                }
+
+                let parts = username.split(" ");
+
+                if(parts.length < 1){
+                    uError.innerHTML = "Please enter at least two words!";
+                    uError.style.color = "red";
+                    return;
+                }
+
+                let pattern = /^[A-Za-z][A-Za-z.\-\s]*$/;
+
+                if(!pattern.test(username)){
+                    uError.innerHTML = "Use letters, dot (.), dash (-) and start with a letter!";
+                    uError.style.color = "red";
+                    return;
+                }
+
+                uError.innerHTML = "Name is valid!";
+                uError.style.color = "green";
+            }
+
+        </script>
+    </body>
+</html>
